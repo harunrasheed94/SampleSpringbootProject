@@ -1,0 +1,240 @@
+<table name="Customer">
+	<description>Table with each customer details</description>
+	<columns>
+		<column name="CUSTOMER_ID">
+			<data-type>BIGINT</data-type>
+			<nullable>false</nullable>
+		</column>
+
+		<column name="CUSTOMER_FIRSTNAME">
+			<data-type>CHAR</data-type>
+			<max-size>300</max-size>
+			<nullable>false</nullable>
+		</column>
+
+		<column name="CUSTOMER_LASTNAME">
+			<data-type>CHAR</data-type>
+			<max-size>300</max-size>
+			<nullable>false</nullable>
+		</column>
+
+		<column name="EMAIL_ID">
+			<data-type>CHAR</data-type>
+			<max-size>200</max-size>
+			<default-value>null</default-value>
+			<nullable>true</nullable>
+		</column>
+
+		<column name="PHONE_NUMBER">
+			<data-type>CHAR</data-type>
+			<max-size>200</max-size>
+			<default-value>null</default-value>
+			<nullable>true</nullable>
+		</column>
+		
+	</columns>
+
+	<primary-key name="Customer_PK">
+		<primary-key-column>CUSTOMER_ID</primary-key-column>
+	</primary-key>
+</table>
+
+<table name="Product">
+	<description>Table with each product details</description>
+	<columns>
+		<column name="PRODUCT_ID">
+			<data-type>BIGINT</data-type>
+			<nullable>false</nullable>
+		</column>
+
+		<column name="NAME">
+			<data-type>CHAR</data-type>
+			<max-size>300</max-size>
+			<nullable>false</nullable>
+		</column>
+
+		<column name="BASE_PRICE">
+			<data-type>DOUBLE</data-type>
+			<nullable>false</nullable>
+		</column>
+
+		<column name="QUANTITY">
+			<data-type>BIGINT</data-type>
+			<default-value>null</default-value>
+			<nullable>true</nullable>
+		</column>
+		
+	</columns>
+
+	<primary-key name="Product_PK">
+		<primary-key-column>PRODUCT_ID</primary-key-column>
+	</primary-key>
+</table>
+
+<table name="Category">
+	<description>Table with each category details</description>
+	<columns>
+		<column name="CATEGORY_ID">
+			<data-type>BIGINT</data-type>
+			<nullable>false</nullable>
+		</column>
+
+		<column name="CATEGORY_NAME">
+			<data-type>CHAR</data-type>
+			<max-size>300</max-size>
+			<nullable>false</nullable>
+		</column>
+
+	</columns>
+
+	<primary-key name="Category_PK">
+		<primary-key-column>CATEGORY_ID</primary-key-column>
+	</primary-key>
+</table>
+
+<table name="ProductCategoryMapping">
+	<description>Table with each product mapped to a category</description>
+	<columns>
+	
+	     <column name="PRODUCT_ID">
+			<data-type>BIGINT</data-type>
+			<nullable>false</nullable>
+		</column>
+		
+		<column name="CATEGORY_ID">
+			<data-type>BIGINT</data-type>
+			<nullable>false</nullable>
+		</column>
+
+	</columns>
+
+	<primary-key name="ProductCategory_PK">
+		<primary-key-column>PRODUCT_ID</primary-key-column>
+		<primary-key-column>CATEGORY_ID</primary-key-column>
+	</primary-key>
+	
+	<foreign-keys>
+		
+		<foreign-key name="FK_CategoryId" reference-table-name="Category">
+			<fk-columns>
+				<fk-column>
+					<fk-local-column>CATEGORY_ID</fk-local-column>
+					<fk-reference-column>CATEGORY_ID</fk-reference-column>
+				</fk-column>
+			</fk-columns>
+			<fk-constraints>ON-DELETE-CASCADE</fk-constraints>
+		</foreign-key>
+		
+		<foreign-key name="FK_ProductId" reference-table-name="Product">
+			<fk-columns>
+				<fk-column>
+					<fk-local-column>PRODUCT_ID</fk-local-column>
+					<fk-reference-column>PRODUCT_ID</fk-reference-column>
+				</fk-column>
+			</fk-columns>
+			<fk-constraints>ON-DELETE-CASCADE</fk-constraints>
+		</foreign-key>
+		
+	</foreign-keys>	
+</table>
+
+<table name="Orders">
+	<description>Table with each order details for a customer</description>
+	<columns>
+		<column name="ORDER_ID">
+			<data-type>BIGINT</data-type>
+			<nullable>false</nullable>
+		</column>
+
+		<column name="ORDER_STATUS">
+			<data-type>INT</data-type>
+			<nullable>false</nullable>
+		</column>
+
+		<column name="CUSTOMER_ID">
+			<data-type>BIGINT</data-type>
+			<nullable>false</nullable>
+		</column>
+
+		<column name="ORDER_DATE">
+			<description>Date</description>
+			<data-type>BIGINT</data-type>
+			<nullable>false</nullable>
+		</column>
+		
+	</columns>
+
+	<primary-key name="Order_PK">
+		<primary-key-column>ORDER_ID</primary-key-column>
+	</primary-key>
+	
+	<foreign-keys>
+	
+		<foreign-key name="FK_CustomerId" reference-table-name="Customer">
+			<fk-columns>
+				<fk-column>
+					<fk-local-column>CUSTOMER_ID</fk-local-column>
+					<fk-reference-column>CUSTOMER_ID</fk-reference-column>
+				</fk-column>
+			</fk-columns>
+			<fk-constraints>ON-DELETE-CASCADE</fk-constraints>
+		</foreign-key>
+		
+	</foreign-keys>
+</table>
+
+<table name="OrdersProductMapping">
+	<description>Table with all the products mapping for an order</description>
+	<columns>
+	
+		<column name="ORDER_ID">
+			<data-type>BIGINT</data-type>
+			<nullable>false</nullable>
+		</column>
+	
+	     <column name="PRODUCT_ID">
+			<data-type>BIGINT</data-type>
+			<nullable>false</nullable>
+		</column>
+		
+		<column name="QUANTITYORDERED">
+			<data-type>DOUBLE</data-type>
+			<nullable>false</nullable>
+		</column>
+
+	</columns>
+
+	<primary-key name="OrdersProduct_PK">
+		<primary-key-column>ORDER_ID</primary-key-column>
+		<primary-key-column>PRODUCT_ID</primary-key-column>
+	</primary-key>
+	
+	<foreign-keys>
+		
+		<foreign-key name="FK_OrderId" reference-table-name="Orders">
+			<fk-columns>
+				<fk-column>
+					<fk-local-column>ORDER_ID</fk-local-column>
+					<fk-reference-column>ORDER_ID</fk-reference-column>
+				</fk-column>
+			</fk-columns>
+			<fk-constraints>ON-DELETE-CASCADE</fk-constraints>
+		</foreign-key>
+		
+		<foreign-key name="FK_ProductId" reference-table-name="Product">
+			<fk-columns>
+				<fk-column>
+					<fk-local-column>PRODUCT_ID</fk-local-column>
+					<fk-reference-column>PRODUCT_ID</fk-reference-column>
+				</fk-column>
+			</fk-columns>
+			<fk-constraints>ON-DELETE-CASCADE</fk-constraints>
+		</foreign-key>
+		
+	</foreign-keys>	
+</table>
+
+
+
+
+
